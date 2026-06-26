@@ -1,11 +1,11 @@
 import SiteShell from "@/components/site/SiteShell";
-import AboutHero from "@/components/about/AboutHero";
+import AboutReveal from "@/components/about/AboutReveal";
 import AboutContent from "@/components/about/AboutContent";
 
 export default function AboutPage() {
   return (
     <SiteShell minimalHeader>
-      <AboutHero />
+      <AboutReveal />
       <AboutContent />
     </SiteShell>
   );
