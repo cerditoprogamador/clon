@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Logo } from "./Marks";
+import { usePathname } from "next/navigation";
+import { Logo, Circles } from "./Marks";
 
 const ITEMS = [
   { label: "Home",     href: "/" },
@@ -11,23 +12,41 @@ const ITEMS = [
   { label: "Contact",  href: "/contact" },
 ];
 
-const panel = {
-  hidden: { y: "-100%" },
-  show:   { y: "0%" },
-};
+const ZONES = [
+  { tz: "Europe/London",    label: "LDN" },
+  { tz: "Asia/Tokyo",       label: "TYO" },
+  { tz: "America/New_York", label: "NYC" },
+];
 
-export default function Menu({
-  open,
-  onClose,
-}: {
-  open: boolean;
-  onClose: () => void;
-}) {
+function useClock(tz: string) {
+  const [t, setT] = useState("--:-- --");
+  useEffect(() => {
+    const fmt = new Intl.DateTimeFormat("en-US", {
+      hour: "2-digit", minute: "2-digit", hour12: true, timeZone: tz,
+    });
+    const tick = () => setT(fmt.format(new Date()));
+    tick();
+    const id = setInterval(tick, 15_000);
+    return () => clearInterval(id);
+  }, [tz]);
+  return t;
+}
+
+const panel = { hidden: { y: "-100%" }, show: { y: "0%" } };
+const ease  = [0.76, 0, 0.24, 1] as const;
+
+export default function Menu({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const pathname = usePathname();
+  const t0 = useClock(ZONES[0].tz);
+  const t1 = useClock(ZONES[1].tz);
+  const t2 = useClock(ZONES[2].tz);
+  const times = [t0, t1, t2];
+
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    const fn = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", fn);
+    return () => window.removeEventListener("keydown", fn);
   }, [open, onClose]);
 
   return (
@@ -39,55 +58,69 @@ export default function Menu({
           initial="hidden"
           animate="show"
           exit="hidden"
-          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+          transition={{ duration: 0.8, ease }}
           aria-label="Menu"
         >
-          {/* Logo */}
+          {/* ── Top bar: logo left · close right ── */}
+          <div className="w-menu__topbar w-container">
+            <motion.span
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.45, delay: 0.2 }}
+            >
+              <Logo wordmarkOnly className="w-menu__topbar-logo" />
+            </motion.span>
+
+            <motion.button
+              type="button" className="w-menu__close" onClick={onClose} aria-label="Close menu"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.45, delay: 0.25 }}
+            >
+              <span className="w-header__menu-label">Close</span>
+              <span className="w-burger" data-open="true"><span /><span /><span /></span>
+            </motion.button>
+          </div>
+
+          {/* ── Mid: circles mark + timezone clocks ── */}
           <motion.div
-            className="w-menu__wordmark"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.6, ease: [0.16, 0.84, 0.44, 1], delay: 0.25 }}
+            className="w-menu__mid w-container"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <Logo wordmarkOnly className="w-menu__wordmark-svg" />
+            <Circles className="w-menu__circles" />
+            <ul className="w-menu__clocks">
+              {times.map((t, i) => (
+                <li key={ZONES[i].label}>
+                  {i === 0 && <span className="w-clock-tri">▸</span>}
+                  {t}
+                </li>
+              ))}
+            </ul>
           </motion.div>
 
-          {/* Close button */}
-          <motion.button
-            type="button"
-            className="w-menu__close"
-            onClick={onClose}
-            aria-label="Close menu"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: [0.16, 0.84, 0.44, 1], delay: 0.3 }}
-          >
-            <span className="w-header__menu-label">Close</span>
-            <span className="w-burger" data-open="true">
-              <span />
-              <span />
-              <span />
-            </span>
-          </motion.button>
-
-          {/* Nav items */}
-          <ul className="w-container w-menu__list">
-            {ITEMS.map(({ label, href }, i) => (
-              <motion.li
-                key={label}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ delay: 0.25 + i * 0.06, duration: 0.6 }}
-              >
-                <a href={href} className="w-menu__link" onClick={onClose}>
-                  <span className="w-menu__index">0{i + 1}</span>
-                  {label}
-                </a>
-              </motion.li>
-            ))}
+          {/* ── Nav items ── */}
+          <ul className="w-menu__list">
+            {ITEMS.map(({ label, href }, i) => {
+              const active = pathname === href;
+              return (
+                <motion.li
+                  key={label}
+                  className="w-menu__item"
+                  initial={{ opacity: 0, y: 28 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ delay: 0.28 + i * 0.06, duration: 0.55 }}
+                >
+                  <a
+                    href={href}
+                    className={`w-menu__link${active ? " is-active" : ""}`}
+                    onClick={onClose}
+                  >
+                    {active && <span className="w-menu__arrow">▶</span>}
+                    {label}
+                  </a>
+                </motion.li>
+              );
+            })}
           </ul>
         </motion.nav>
       )}
