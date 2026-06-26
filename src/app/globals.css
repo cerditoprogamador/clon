@@ -676,7 +676,6 @@ body:has(.home-fluid) { background: transparent; }
 .h-hero__center {
   position: absolute;
   inset: 0;
-  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -690,6 +689,7 @@ body:has(.home-fluid) { background: transparent; }
   line-height: 0.9;
   letter-spacing: -0.015em;
   font-size: clamp(44px, 7.6vw, 142px);
+  text-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
 }
 .h-hero__line-wrap { display: block; overflow: hidden; }
 .h-hero__line { display: inline-block; will-change: clip-path, transform; }

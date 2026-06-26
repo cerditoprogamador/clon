@@ -7,6 +7,7 @@ import PageTransition from "@/components/work/PageTransition";
 import Header from "@/components/work/Header";
 import Menu from "@/components/work/Menu";
 import Footer from "@/components/work/Footer";
+import { MenuContext } from "@/lib/MenuContext";
 
 export default function SiteShell({
   children,
@@ -25,15 +26,17 @@ export default function SiteShell({
       <PageTransition />
       <Menu open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-      <div id="top" className={`w-root${dark ? " w-root--dark" : ""}`}>
-        <Header
-          minimal={minimalHeader}
-          onMenu={() => setMenuOpen((v) => !v)}
-          menuOpen={menuOpen}
-        />
-        <main>{children}</main>
-        <Footer />
-      </div>
+      <MenuContext.Provider value={menuOpen}>
+        <div id="top" className={`w-root${dark ? " w-root--dark" : ""}`}>
+          <Header
+            minimal={minimalHeader}
+            onMenu={() => setMenuOpen((v) => !v)}
+            menuOpen={menuOpen}
+          />
+          <main>{children}</main>
+          <Footer />
+        </div>
+      </MenuContext.Provider>
     </CursorProvider>
   );
 }

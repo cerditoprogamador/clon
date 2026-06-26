@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Grainient from "./Grainient";
-import { getHomePalette } from "@/lib/palettes";
+import { usePalette } from "./PaletteProvider";
 
 export default function HomeBackground() {
   const posRef = useRef<[number, number]>([0, 0]);
-  // Random palette, chosen once on the client for this page load.
-  const [colors] = useState(getHomePalette);
+  const palette = usePalette();
 
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
@@ -24,7 +23,7 @@ export default function HomeBackground() {
     <div style={{ position: "fixed", inset: 0, zIndex: -1 }}>
       <Grainient
         posRef={posRef}
-        colors={colors}
+        colors={palette ?? undefined}
         warpStrength={1.1}
         warpFrequency={4.2}
         warpSpeed={1.6}

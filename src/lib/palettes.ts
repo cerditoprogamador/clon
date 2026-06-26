@@ -49,6 +49,11 @@ export function getHomePalette(): Palette {
   return PALETTES[ensureHome()].colors;
 }
 
+/** Full entry (name + colors) for the home palette. */
+export function getHomePaletteEntry(): { name: string; colors: Palette } {
+  return PALETTES[ensureHome()];
+}
+
 /** A palette guaranteed to differ from the home page's. */
 export function getWorkPalette(): Palette {
   const home = ensureHome();

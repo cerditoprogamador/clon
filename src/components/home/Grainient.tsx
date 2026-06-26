@@ -115,6 +115,10 @@ void mainImage(out vec4 o, vec2 C){
   col = mix(vec3(luma), col, uSaturation);
   col = pow(max(col, 0.0), vec3(1.0 / max(uGamma, 0.001)));
 
+  // Prevent near-white so white text stays readable across all palettes
+  float finalLuma = dot(col, vec3(0.2126, 0.7152, 0.0722));
+  col *= mix(1.0, 0.72 / max(finalLuma, 0.001), smoothstep(0.60, 0.85, finalLuma));
+
   o = vec4(clamp(col, 0.0, 1.0), 1.0);
 }
 

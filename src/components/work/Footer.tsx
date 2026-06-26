@@ -1,6 +1,7 @@
 "use client";
 
 import { Circles } from "./Marks";
+import FooterReveal from "@/components/home/FooterReveal";
 
 const SOCIALS = [
   ["Fb", "https://facebook.com"],
@@ -22,6 +23,7 @@ const NAV = [
 export default function Footer() {
   return (
     <footer id="footer" className="w-footer">
+      <FooterReveal />
       <div className="w-container w-footer__inner">
         <div className="w-footer__head">
           <Circles className="w-footer__circles" />
