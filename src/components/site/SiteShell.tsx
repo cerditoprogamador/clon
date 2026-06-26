@@ -8,6 +8,7 @@ import Header from "@/components/work/Header";
 import Menu from "@/components/work/Menu";
 import Footer from "@/components/work/Footer";
 import { MenuContext } from "@/lib/MenuContext";
+import { PaletteProvider } from "@/components/home/PaletteProvider";
 
 export default function SiteShell({
   children,
@@ -27,15 +28,17 @@ export default function SiteShell({
       <Menu open={menuOpen} onClose={() => setMenuOpen(false)} />
 
       <MenuContext.Provider value={menuOpen}>
-        <div id="top" className={`w-root${dark ? " w-root--dark" : ""}`}>
-          <Header
-            minimal={minimalHeader}
-            onMenu={() => setMenuOpen((v) => !v)}
-            menuOpen={menuOpen}
-          />
-          <main>{children}</main>
-          <Footer />
-        </div>
+        <PaletteProvider>
+          <div id="top" className={`w-root${dark ? " w-root--dark" : ""}`}>
+            <Header
+              minimal={minimalHeader}
+              onMenu={() => setMenuOpen((v) => !v)}
+              menuOpen={menuOpen}
+            />
+            <main>{children}</main>
+            <Footer />
+          </div>
+        </PaletteProvider>
       </MenuContext.Provider>
     </CursorProvider>
   );

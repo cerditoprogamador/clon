@@ -6,12 +6,10 @@ import GlassSurface from "@/components/ui/GlassSurface";
 import { Logo } from "./Marks";
 
 const ITEMS = [
-  { label: "Home",        href: "/" },
-  { label: "Work",        href: "/work" },
-  { label: "Services",    href: "#services" },
-  { label: "Team",        href: "#team" },
-  { label: "Contact",     href: "#contact" },
-  { label: "Press & News",href: "#press" },
+  { label: "Home",     href: "/" },
+  { label: "Work",     href: "/work" },
+  { label: "About me", href: "/about" },
+  { label: "Contact",  href: "/contact" },
 ];
 
 const panel = {

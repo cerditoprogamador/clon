@@ -26,12 +26,10 @@ function useClock(timeZone: string) {
 const NAV_MAIN = [
   { label: "Home",     href: "/" },
   { label: "Work",     href: "/work" },
-  { label: "Services", href: "#" },
+  { label: "About me", href: "/about" },
 ];
 const NAV_ALT = [
-  { label: "Team",          href: "#" },
-  { label: "Contact",       href: "#footer" },
-  { label: "Press & News",  href: "#" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const ease = [0.16, 0.84, 0.44, 1] as const;

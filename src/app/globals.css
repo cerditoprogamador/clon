@@ -845,4 +845,173 @@ body:has(.home-fluid) { background: transparent; }
   transform: translateX(-50%);
   white-space: nowrap;
 }
+
+/* ============================================================
+   About page
+   ============================================================ */
+.w-about {
+  background: #fff;
+  color: #000;
+  padding: 14vh 0 16vh;
+}
+.w-about__statement {
+  font-size: clamp(22px, 3.4vw, 56px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  max-width: 24ch;
+  margin: 0 0 14vh;
+  font-style: italic;
+}
+.w-about__skills {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 14vh;
+}
+@media (max-width: 900px) {
+  .w-about__skills { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .w-about__skills { grid-template-columns: 1fr; }
+}
+.w-skill {
+  padding: 40px 28px 40px 0;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+.w-skill:last-child { border-right: 0; }
+@media (max-width: 900px) {
+  .w-skill:nth-child(2) { border-right: 0; }
+  .w-skill:nth-child(n+3) {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .w-skill:nth-child(odd):not(:last-child) {
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+  }
+}
+@media (max-width: 560px) {
+  .w-skill { border-right: 0 !important; padding-right: 0; }
+}
+.w-skill__num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  margin: 0 0 28px;
+}
+.w-skill__label {
+  font-size: clamp(16px, 1.5vw, 24px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 14px;
+}
+.w-skill__desc {
+  font-size: 14px;
+  line-height: 1.55;
+  opacity: 0.55;
+  margin: 0;
+  max-width: 22ch;
+}
+.w-about__bio {
+  max-width: 54ch;
+  font-size: clamp(16px, 1.25vw, 22px);
+  line-height: 1.55;
+  opacity: 0.65;
+  margin: 0;
+}
+
+/* ============================================================
+   Contact page
+   ============================================================ */
+.w-contact {
+  background: #fff;
+  color: #000;
+  padding: 14vh 0 16vh;
+}
+.w-contact__inner { display: flex; flex-direction: column; }
+.w-contact__email {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: clamp(18px, 2.8vw, 46px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  color: #000;
+  margin-bottom: 12vh;
+  transition: opacity 0.3s ease;
+  word-break: break-all;
+}
+.w-contact__email:hover { opacity: 0.5; }
+.w-contact__grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 8vw;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .w-contact__grid { grid-template-columns: 1fr; gap: 60px; }
+}
+.w-contact__form { display: flex; flex-direction: column; gap: 36px; }
+.w-contact__field { display: flex; flex-direction: column; gap: 10px; }
+.w-contact__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.45;
+}
+.w-contact__input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.18);
+  padding: 10px 0;
+  font: inherit;
+  font-size: clamp(15px, 1.15vw, 18px);
+  color: #000;
+  outline: none;
+  transition: border-color 0.3s ease;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+}
+.w-contact__input::placeholder { opacity: 0.35; }
+.w-contact__input:focus { border-color: #000; }
+.w-contact__textarea { resize: none; min-height: 120px; }
+.w-contact__submit {
+  align-self: flex-start;
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 16px 32px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+.w-contact__submit:hover { opacity: 0.7; }
+.w-contact__info { display: flex; flex-direction: column; gap: 40px; }
+.w-contact__sub {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.45;
+  margin: 0 0 12px;
+}
+.w-contact__gray {
+  font-size: 15px;
+  line-height: 1.65;
+  opacity: 0.7;
+  margin: 0;
+}
 @media (max-width: 900px) { .h-recent__btn { bottom: 4vh; } }

@@ -11,13 +11,11 @@ const SOCIALS = [
 ];
 
 const NAV = [
-  "Home",
-  "Work",
-  "Services",
-  "Team",
-  "Contact",
-  "Press & News",
-  "Privacy policy",
+  { label: "Home",           href: "/" },
+  { label: "Work",           href: "/work" },
+  { label: "About me",       href: "/about" },
+  { label: "Contact",        href: "/contact" },
+  { label: "Privacy policy", href: "#" },
 ];
 
 export default function Footer() {
@@ -33,36 +31,27 @@ export default function Footer() {
         <div className="w-footer__grid">
           <div className="w-footer__col w-footer__col--contact">
             <p className="w-footer__gray">
-              Feel free to reach out if you want to collaborate with us, or
-              simply have a chat.
+              Feel free to reach out if you want to collaborate, or simply have a chat.
             </p>
-            <a href="mailto:contact@monopo.london" className="w-footer__email">
-              contact@monopo.london <span className="w-footer__email-arrow">→</span>
+            <a href="mailto:ginolocate983@gmail.com" className="w-footer__email">
+              ginolocate983@gmail.com <span className="w-footer__email-arrow">→</span>
             </a>
           </div>
 
           <div className="w-footer__col">
-            <h4 className="w-footer__sub">Our Address</h4>
+            <h4 className="w-footer__sub">Based in</h4>
             <address className="w-footer__gray w-footer__address">
-              Unit D104
+              Buenos Aires
               <br />
-              116 Commercial Street
-              <br />
-              London, E1 6NF
-              <br />
-              United Kingdom
+              Argentina
               <br />
               <br />
-              VAT: 319656475
-              <br />
-              Company no. 11843590
-              <br />
-              Registered in England &amp; Wales
+              Available worldwide
             </address>
           </div>
 
           <div className="w-footer__col">
-            <h4 className="w-footer__sub">Follow us</h4>
+            <h4 className="w-footer__sub">Follow</h4>
             <ul className="w-footer__socials">
               {SOCIALS.map(([label, href]) => (
                 <li key={label}>
@@ -72,24 +61,13 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-            <ul className="w-footer__externals">
-              <li>
-                <a href="#">↗ Monopo TKY</a>
-              </li>
-              <li>
-                <a href="#">↗ Monopo NYC</a>
-              </li>
-              <li>
-                <a href="#">↗ Powered by Tokyo</a>
-              </li>
-            </ul>
           </div>
 
           <div className="w-footer__col">
             <ul className="w-footer__nav">
-              {NAV.map((label) => (
+              {NAV.map(({ label, href }) => (
                 <li key={label}>
-                  <a href="#" className="w-footer__navlink">
+                  <a href={href} className="w-footer__navlink">
                     {label}
                   </a>
                 </li>
@@ -100,8 +78,7 @@ export default function Footer() {
 
         <div className="w-footer__foot">
           <span className="w-footer__copy">
-            © MONOPO LONDON LTD {new Date().getFullYear()} — Clone study. All
-            rights reserved.
+            © Gino {new Date().getFullYear()} — All rights reserved.
           </span>
           <button
             type="button"
