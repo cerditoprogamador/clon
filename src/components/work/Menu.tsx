@@ -12,11 +12,7 @@ const ITEMS = [
   { label: "Contact",  href: "/contact" },
 ];
 
-const ZONES = [
-  { tz: "Europe/London",    label: "LDN" },
-  { tz: "Asia/Tokyo",       label: "TYO" },
-  { tz: "America/New_York", label: "NYC" },
-];
+const MENDOZA_TZ = "America/Argentina/Mendoza";
 
 function useClock(tz: string) {
   const [t, setT] = useState("--:-- --");
@@ -37,10 +33,7 @@ const ease  = [0.76, 0, 0.24, 1] as const;
 
 export default function Menu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const pathname = usePathname();
-  const t0 = useClock(ZONES[0].tz);
-  const t1 = useClock(ZONES[1].tz);
-  const t2 = useClock(ZONES[2].tz);
-  const times = [t0, t1, t2];
+  const mendozaTime = useClock(MENDOZA_TZ);
 
   useEffect(() => {
     if (!open) return;
@@ -87,14 +80,14 @@ export default function Menu({ open, onClose }: { open: boolean; onClose: () => 
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <Circles className="w-menu__circles" />
-            <ul className="w-menu__clocks">
-              {times.map((t, i) => (
-                <li key={ZONES[i].label}>
-                  {i === 0 && <span className="w-clock-tri">▸</span>}
-                  {t}
-                </li>
-              ))}
-            </ul>
+            <div className="w-menu__location">
+              <span className="w-menu__location-city">Mendoza</span>
+              <span className="w-menu__location-country">Argentina</span>
+              <span className="w-menu__location-time">
+                <span className="w-clock-tri">▸</span>
+                {mendozaTime}
+              </span>
+            </div>
           </motion.div>
 
           {/* ── Nav items ── */}
@@ -115,7 +108,7 @@ export default function Menu({ open, onClose }: { open: boolean; onClose: () => 
                     className={`w-menu__link${active ? " is-active" : ""}`}
                     onClick={onClose}
                   >
-                    {active && <span className="w-menu__arrow">▶</span>}
+                    {active && <span className="w-menu__dot" aria-hidden />}
                     {label}
                   </a>
                 </motion.li>
